@@ -1,0 +1,9 @@
+{
+	"name": "endtoenddatafactory53",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "489c1a68-8a50-488c-92c3-43fb9c1c489d",
+		"tenantId": "93f33571-550f-43cf-b09f-cd331338d086"
+	}
+}

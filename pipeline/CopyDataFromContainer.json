@@ -1,0 +1,89 @@
+{
+	"name": "CopyDataFromContainer",
+	"properties": {
+		"description": "To Copy Data from one container to another",
+		"activities": [
+			{
+				"name": "CopyDataFromBlob",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceCSVDataSet",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SinkCSVDataSet",
+						"type": "DatasetReference",
+						"parameters": {
+							"SinkFileNameDS": {
+								"value": "@pipeline().parameters.SinkFilename",
+								"type": "Expression"
+							},
+							"sinkDirectoryDS": {
+								"value": "@pipeline().parameters.SinkDirectory",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"SinkFilename": {
+				"type": "string",
+				"defaultValue": "filename1.csv"
+			},
+			"SinkDirectory": {
+				"type": "string",
+				"defaultValue": "Kishor"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-13T22:38:24Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
